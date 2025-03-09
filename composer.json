@@ -69,7 +69,10 @@
             "@format",
             "@analyse",
             "@test"
-        ]
+        ],
+        "fix-rector": "vendor/bin/rector process --dry-run",
+        "fix": "vendor/bin/rector process",
+        "docs": "php artisan l5-swagger:generate"
     },
     "extra": {
         "laravel": {
