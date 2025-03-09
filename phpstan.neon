@@ -1,0 +1,16 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    level: 5
+    paths:
+        - app
+        - config
+        - database
+        - routes
+        - tests
+    excludePaths:
+        - ./app/Http/Controllers/SwaggerController.php
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
