@@ -35,7 +35,7 @@ use Illuminate\Http\Request;
  *      @OA\Property(property="title", type="string", example="Documentação completa do projeto tal..."),
  *      @OA\Property(property="description", type="string", example="Escrever documentação abrangente para projeto tal..."),
  *      @OA\Property(property="status", type="string", enum={"pending", "in_progress", "completed"}, example="pending"),
- *      @OA\Property(property="status_label", type="string", example="Pending"),
+ *      @OA\Property(property="status_label", type="string", example="Pendente"),
  *      @OA\Property(property="due_date", type="string", format="date", example="2023-12-31"),
  *      @OA\Property(property="is_overdue", type="boolean", example=false),
  *      @OA\Property(property="created_at", type="string", format="date-time", example="2023-01-01 12:00:00"),
