@@ -11,13 +11,18 @@ class Profile extends BaseModel
     /** @use HasFactory<\Database\Factories\ProfileFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'description',
+    ];
+
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        'type' => 'string',
+        'type' => ProfileEnum::class,
     ];
 
     /**

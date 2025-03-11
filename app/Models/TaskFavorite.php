@@ -9,6 +9,11 @@ class TaskFavorite extends BaseModel
 {
     use HasFactory;
 
+    protected $fillable = [
+        'task_id',
+        'user_id',
+    ];
+
     /**
      * Obtém a tarefa que foi favoritada.
      */

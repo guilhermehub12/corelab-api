@@ -9,6 +9,12 @@ class TaskColor extends BaseModel
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'hex_code',
+        'description'
+    ];
+
     /**
      * The attributes that should be cast.
      *

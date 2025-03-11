@@ -13,6 +13,15 @@ class Task extends BaseModel
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'status',
+        'color_id',
+        'due_date'
+    ];
+
     /**
      * The attributes that should be cast.
      *
