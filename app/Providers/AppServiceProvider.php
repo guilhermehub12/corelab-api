@@ -65,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
 
         // --
         // Make sure that all properties being called exists in the model
-        Model::shouldBeStrict();
+        // Model::shouldBeStrict();
     }
 
     /**
