@@ -27,6 +27,7 @@ abstract class BaseTaskRequest extends FormRequest
             'description' => 'nullable|string',
             'status' => 'in:pending,in_progress,completed',
             'due_date' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
+            'color_id' => 'nullable|exists:task_colors,id',
         ];
     }
 }

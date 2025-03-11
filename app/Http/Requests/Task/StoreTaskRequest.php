@@ -9,6 +9,7 @@ namespace App\Http\Requests\Task;
  *     @OA\Property(property="title", type="string", example="Concluir a documentação do projeto"),
  *     @OA\Property(property="description", type="string", example="Escrever documentação abrangente para o projeto"),
  *     @OA\Property(property="status", type="string", enum={"pending", "in_progress", "completed"}, example="pending"),
+ *     @OA\Property(property="color_id", type="integer", example=2),
  *     @OA\Property(property="due_date", type="string", format="date", example="2023-12-31")
  * )
  */
