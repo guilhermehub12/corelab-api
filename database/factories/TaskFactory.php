@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\TaskColor;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,12 +23,15 @@ class TaskFactory extends Factory
             'title' => fake()->sentence(),
             'description' => fake()->paragraph(),
             'status' => fake()->randomElement(['pending', 'in_progress', 'completed']),
+            'color_id' => function () {
+                return TaskColor::inRandomOrder()->first()?->id ?? 1;
+            },
             'due_date' => fake()->dateTimeBetween('now', '+30 days'),
         ];
     }
 
     /**
-     * Define a pending task.
+     * Define uma tarefa como pendente.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
@@ -41,7 +45,7 @@ class TaskFactory extends Factory
     }
     
     /**
-     * Define an in-progress task.
+     * Define uma tarefa como em andamento.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
@@ -55,7 +59,7 @@ class TaskFactory extends Factory
     }
     
     /**
-     * Define a completed task.
+     * Define uma tarefa como concluída.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
@@ -64,6 +68,23 @@ class TaskFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'status' => 'completed',
+            ];
+        });
+    }
+
+    /**
+     * Define uma tarefa com uma cor específica.
+     *
+     * @param string $colorName O nome da cor (ex.: 'Vermelho', 'Azul')
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function withColor(string $colorName)
+    {
+        return $this->state(function (array $attributes) use ($colorName) {
+            $colorId = TaskColor::where('name', $colorName)->first()?->id;
+            
+            return [
+                'color_id' => $colorId,
             ];
         });
     }
