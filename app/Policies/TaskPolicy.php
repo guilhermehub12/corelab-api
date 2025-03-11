@@ -20,6 +20,12 @@ class TaskPolicy
      */
     public function view(User $user, Task $task): bool
     {
+        if ($user->isAdmin() || $user->isManager()) {
+            return true;
+        }
+        // futuramente criar times e verificar se o usuário é manager do time
+        // para ele visualizar as tasks do time
+
         return $user->id === $task->user_id;
     }
 
@@ -36,6 +42,12 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
+        if ($user->isAdmin() || $user->isManager()) {
+            return true;
+        }
+        // futuramente criar times e verificar se o usuário é manager do time
+        // para ele editar a task do time
+
         return $user->id === $task->user_id;
     }
 
@@ -44,6 +56,12 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
+        if ($user->isAdmin() || $user->isManager()) {
+            return true;
+        }
+        // futuramente criar times e verificar se o usuário é manager do time
+        // para ele deletar a task do time
+
         return $user->id === $task->user_id;
     }
 
@@ -52,6 +70,12 @@ class TaskPolicy
      */
     public function restore(User $user, Task $task): bool
     {
+        if ($user->isAdmin() || $user->isManager()) {
+            return true;
+        }
+        // futuramente criar times e verificar se o usuário é manager do time
+        // para ele restaurar as tasks do time
+
         return $user->id === $task->user_id;
     }
 
@@ -60,6 +84,26 @@ class TaskPolicy
      */
     public function forceDelete(User $user, Task $task): bool
     {
-        return $user->id === $task->user_id;
+        return $user->isAdmin();
+    }
+
+    /**
+     * Determine whether the user can see all tasks in the system.
+     */
+    public function viewAll(User $user): bool
+    {
+        // Somente administradores e gerentes podem ver todas as tarefas no sistema
+        return $user->isAdmin();
+    }
+    
+    /**
+     * Determine whether the user can assign tasks to other users.
+     */
+    public function assign(User $user): bool
+    {
+        // Somente administradores e gerentes podem atribuir tarefas a outras pessoas
+        // futuramente criar times e verificar se o usuário é manager do time
+        // para ele atribuir tarefas a outras pessoas do time
+        return $user->isAdmin() || $user->isManager();
     }
 }
