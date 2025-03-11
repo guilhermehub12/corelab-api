@@ -25,14 +25,20 @@ return new class extends Migration
             [
                 'type' => 'admin',
                 'description' => 'Administrador',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'type' => 'manager',
                 'description' => 'Gerente de equipe',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'type' => 'member',
                 'description' => 'Membro da equipe',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

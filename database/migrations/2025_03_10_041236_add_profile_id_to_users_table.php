@@ -21,8 +21,6 @@ return new class extends Migration
                 ->constrained('profiles')
                 ->onDelete('restrict')
                 ->default($memberProfileId ?? 3);
-
-            DB::statement('ALTER TABLE users ALTER COLUMN profile_id DROP DEFAULT');
         });
     }
 
