@@ -54,5 +54,5 @@ interface UserRepositoryInterface
      * @param string $name
      * @return string
      */
-    public function createToken(User $user, string $name = env('AUTH_TOKEN')): string;
+    public function createToken(User $user, ?string $name = null): string;
 }
