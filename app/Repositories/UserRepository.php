@@ -134,7 +134,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function createToken(User $user, ?string $name = null): string
     {
-        $name = $name ?? config('values.authToken');
+        $name = $name ?? config('app.authToken');
 
         return $user->createToken($name)->plainTextToken;
     }

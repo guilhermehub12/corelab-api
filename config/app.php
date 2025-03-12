@@ -123,4 +123,22 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+ /*
+    |--------------------------------------------------------------------------
+    | Application API Token
+    |--------------------------------------------------------------------------
+    |
+    | Este token é usado para validar requisições de API de serviços externos.
+    | Você deve definir este valor no seu arquivo .env
+    |
+    */
+    'api_token' => env('API_TOKEN'),
+
+
+    'authToken' => env('AUTH_TOKEN', null),
+
+
+
+
 ];
