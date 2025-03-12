@@ -1,0 +1,50 @@
+app:
+  primary_host: 127.0.0.1
+  secondary_host: host.docker.internal
+  port: 9191
+  workdir: /var/www/html/
+  project_path: /home/guilherme/vagas/corelab/corelab-api/
+  wsl_config: wsl+Ubuntu/
+config:
+  sleep: 0
+  macos_auto_launch: false
+observers:
+  auto_invoke_app: true
+  enabled_in_testing: true
+  dump: true
+  original_dump: true
+  queries: true
+  slow_queries: true
+  mail: true
+  logs: true
+  http: true
+  jobs: true
+  commands: true
+  scheduled_commands: true
+  gate: true
+  cache: true
+xdebug:
+  client_host: 0.0.0.0
+  client_port: 9003
+code_snippet:
+  above: 9
+  below: 3
+logs:
+  info: false
+  warning: false
+  emergency: false
+  alert: false
+  debug: false
+  error: true
+  critical: true
+  notice: true
+  vendor: false
+  deprecated_message: false
+slow_queries:
+  threshold_in_ms: 500
+queries:
+  only_duplicated: false
+  select: true
+  insert: true
+  update: true
+  delete: true
