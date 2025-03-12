@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Opcodes\LogViewer\Facades\LogViewer;
 use Override;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,27 +28,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->setupLogViewer();
         $this->configModels();
         $this->configCommands();
         $this->configUrls();
         $this->configDate();
         $this->configRateLimiting();
         $this->configObservers();
-    }
-
-    /**
-     * Sets up the LogViewer authentication to restrict access
-     * based on whether the authenticated user is an admin.
-     */
-    private function setupLogViewer(): void
-    {
-        if (app()->environment('production')) {
-            LogViewer::auth(function ($request) {
-                $user = $request->user();
-                return $user && $user->isAdmin();
-            });
-        }
     }
 
     /**
