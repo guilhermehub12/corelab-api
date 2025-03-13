@@ -12,5 +12,3 @@ parameters:
         - tests
     excludePaths:
         - ./app/Http/Controllers/SwaggerController.php
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
