@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TaskController;
-use App\Http\Middleware\EnsureApiToken;
 use Illuminate\Support\Facades\Route;
 
 // Rotas públicas

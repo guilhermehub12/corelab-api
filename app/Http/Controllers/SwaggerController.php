@@ -94,6 +94,15 @@ use Illuminate\Http\Request;
  *          )
  *      )
  * )
+ * 
+ * @OA\Schema(
+ *     schema="TaskColor",
+ *     title="taskColor",
+ *     description="Modelo de cores",
+ *     @OA\Property(property="id", type="integer", format="int64", example=1, description="ID da cor"),
+ *     @OA\Property(property="name", type="string", example="Azul", description="Nome da cor"),
+ *     @OA\Property(property="hex_code", type="string", example="#0000FF", description="Código hexadecimal da cor")
+ * )
  */
 class SwaggerController extends Controller
 {

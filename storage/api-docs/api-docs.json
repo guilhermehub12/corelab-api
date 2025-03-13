@@ -181,7 +181,7 @@
         "/api/tasks": {
             "get": {
                 "tags": [
-                    "Tasks"
+                    "Tarefas"
                 ],
                 "summary": "Obter todas as tarefas do usuário autenticado",
                 "description": "Lista todas as tarefas.",
@@ -239,7 +239,7 @@
             },
             "post": {
                 "tags": [
-                    "Tasks"
+                    "Tarefas"
                 ],
                 "summary": "Cria uma nova tarefa",
                 "description": "Armarzena uma nova tarefa.",
@@ -287,7 +287,7 @@
         "/api/tasks/{id}": {
             "get": {
                 "tags": [
-                    "Tasks"
+                    "Tarefas"
                 ],
                 "summary": "Obtém uma tarefa específica",
                 "description": "Exibe uma tarefa específica.",
@@ -337,7 +337,7 @@
             },
             "put": {
                 "tags": [
-                    "Tasks"
+                    "Tarefas"
                 ],
                 "summary": "Atualiza uma tarefa específica",
                 "description": "Atualiza uma tarefa específica.",
@@ -400,7 +400,7 @@
             },
             "delete": {
                 "tags": [
-                    "Tasks"
+                    "Tarefas"
                 ],
                 "summary": "Remove a tarefa específica",
                 "description": "Remove a tarefa específica.",
@@ -425,6 +425,206 @@
                     },
                     "403": {
                         "description": "Acesso proibido"
+                    },
+                    "404": {
+                        "description": "Tarefa não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tasks/colors": {
+            "get": {
+                "tags": [
+                    "Tarefas (Cores)"
+                ],
+                "summary": "Obter todas as cores disponíveis para tarefas",
+                "description": "Obter todas as cores disponíveis para tarefas.",
+                "operationId": "getTaskColors",
+                "responses": {
+                    "200": {
+                        "description": "Lista de cores disponíveis",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TaskColor"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tasks/{id}/color/{colorId}": {
+            "put": {
+                "tags": [
+                    "Tarefas (Cores)"
+                ],
+                "summary": "Atualizar a cor de uma tarefa",
+                "description": "Atualizar a cor de uma tarefa específica.",
+                "operationId": "updateTaskColor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "colorId",
+                        "in": "path",
+                        "description": "ID da cor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cor da tarefa atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Task"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    },
+                    "403": {
+                        "description": "Proibido"
+                    },
+                    "404": {
+                        "description": "Tarefa ou cor não encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tasks/favorites": {
+            "get": {
+                "tags": [
+                    "Tarefas (Favoritos)"
+                ],
+                "summary": "Obter todas as tarefas favoritas do usuário autenticado",
+                "description": "Obter as tarefas favoritas do usuário autenticado.",
+                "operationId": "getFavoriteTasks",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tarefas favoritas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Task"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tasks/{id}/favorite": {
+            "post": {
+                "tags": [
+                    "Tarefas (Favoritos)"
+                ],
+                "summary": "Alternar o status de favorito de uma tarefa",
+                "description": "Alternar o status de favorito de uma tarefa.",
+                "operationId": "toggleFavoriteTask",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status alterado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "is_favorited": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tarefa adicionada aos favoritos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Não autenticado"
+                    },
+                    "403": {
+                        "description": "Proibido"
                     },
                     "404": {
                         "description": "Tarefa não encontrada"
@@ -490,7 +690,7 @@
                     "due_date": {
                         "type": "string",
                         "format": "date",
-                        "example": "2023-12-31"
+                        "example": "2025-12-31"
                     },
                     "is_overdue": {
                         "type": "boolean",
@@ -507,12 +707,12 @@
                     "created_at": {
                         "type": "string",
                         "format": "date-time",
-                        "example": "2023-01-01 12:00:00"
+                        "example": "2025-01-01 12:00:00"
                     },
                     "updated_at": {
                         "type": "string",
                         "format": "date-time",
-                        "example": "2023-01-02 13:00:00"
+                        "example": "2025-01-02 13:00:00"
                     },
                     "user": {
                         "properties": {
@@ -602,13 +802,13 @@
                         "description": "Data da criação",
                         "type": "string",
                         "format": "date-time",
-                        "example": "2023-01-01 12:00:00"
+                        "example": "2025-01-01 12:00:00"
                     },
                     "updated_at": {
                         "description": "Última data de atualização",
                         "type": "string",
                         "format": "date-time",
-                        "example": "2023-01-02 13:00:00"
+                        "example": "2025-01-02 13:00:00"
                     }
                 },
                 "type": "object"
@@ -630,6 +830,29 @@
                             }
                         },
                         "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskColor": {
+                "title": "taskColor",
+                "description": "Modelo de cores",
+                "properties": {
+                    "id": {
+                        "description": "ID da cor",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Nome da cor",
+                        "type": "string",
+                        "example": "Azul"
+                    },
+                    "hex_code": {
+                        "description": "Código hexadecimal da cor",
+                        "type": "string",
+                        "example": "#0000FF"
                     }
                 },
                 "type": "object"
@@ -715,7 +938,7 @@
                         "description": "Data de vencimento no formato YYYY-MM-DD",
                         "type": "string",
                         "format": "date",
-                        "example": "2023-12-31"
+                        "example": "2025-12-31"
                     }
                 },
                 "type": "object"
@@ -746,7 +969,7 @@
                     "due_date": {
                         "type": "string",
                         "format": "date",
-                        "example": "2023-12-31"
+                        "example": "2025-12-31"
                     }
                 },
                 "type": "object"
@@ -761,12 +984,20 @@
     },
     "tags": [
         {
-            "name": "Tasks",
+            "name": "Tarefas",
             "description": "Endpoints para Gestão das Tarefas"
         },
         {
             "name": "Autenticação",
             "description": "Autenticação"
+        },
+        {
+            "name": "Tarefas (Cores)",
+            "description": "Tarefas (Cores)"
+        },
+        {
+            "name": "Tarefas (Favoritos)",
+            "description": "Tarefas (Favoritos)"
         }
     ]
 }
