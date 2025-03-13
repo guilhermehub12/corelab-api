@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Repositories;
 
 use App\Models\User;
@@ -13,17 +15,17 @@ class UserRepository implements UserRepositoryInterface
      * @var User
      */
     protected User $user;
-    
+
     /**
      * UserRepository constructor
-     * 
+     *
      * @param User $user
      */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
-    
+
     /**
      * Encontra um usuário pelo email.
      *
@@ -36,7 +38,7 @@ class UserRepository implements UserRepositoryInterface
             return $this->user->where('email', $email)->first();
         });
     }
-    
+
     /**
      * Encontra um usuário pelo ID.
      *
@@ -49,7 +51,7 @@ class UserRepository implements UserRepositoryInterface
             return $this->user->find($id);
         });
     }
-    
+
     /**
      * Cria um novo usuário.
      *
@@ -58,23 +60,24 @@ class UserRepository implements UserRepositoryInterface
      */
     public function create(array $data): User
     {
-        if (isset($data['password']) && !Hash::isHashed($data['password'])) {
+        if (isset($data['password']) && ! Hash::isHashed($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
-        
+
         // Define o perfil padrão (member) se não for fornecido
-        if (!isset($data['profile_id'])) {
+        if (! isset($data['profile_id'])) {
             $memberProfileId = \App\Models\Profile::where('type', 'member')->value('id');
+
             if ($memberProfileId) {
                 $data['profile_id'] = $memberProfileId;
             }
         }
-        
+
         $user = $this->user->create($data);
-        
+
         return $user->fresh();
     }
-    
+
     /**
      * Atualiza um usuário existente.
      *
@@ -85,27 +88,28 @@ class UserRepository implements UserRepositoryInterface
     public function update(int $id, array $data): ?User
     {
         $user = $this->findById($id);
-        
-        if (!$user) {
+
+        if (! $user) {
             return null;
         }
-        
-        if (isset($data['password']) && !Hash::isHashed($data['password'])) {
+
+        if (isset($data['password']) && ! Hash::isHashed($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
-        
+
         $user->update($data);
-        
+
         // Limpa o cache do usuário e do email se for alterado
         Cache::forget("user.{$id}");
+
         if (isset($data['email'])) {
             Cache::forget("user.email.{$data['email']}");
         }
         Cache::forget("user.email.{$user->email}");
-        
+
         return $user->fresh();
     }
-    
+
     /**
      * Deleta todos os tokens de um usuário.
      *
@@ -115,16 +119,16 @@ class UserRepository implements UserRepositoryInterface
     public function deleteTokens(int $userId): bool
     {
         $user = $this->findById($userId);
-        
-        if (!$user) {
+
+        if (! $user) {
             return false;
         }
-        
+
         $user->tokens()->delete();
-        
+
         return true;
     }
-    
+
     /**
      * Cria um novo token para um usuário.
      *

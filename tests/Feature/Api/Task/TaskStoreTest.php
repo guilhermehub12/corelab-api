@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Task;
 
 use Tests\AuthTestTrait;
@@ -8,18 +10,19 @@ use Tests\TestCase;
 
 class TaskStoreTest extends TestCase
 {
-    use TaskTestTrait, AuthTestTrait;
+    use TaskTestTrait;
+    use AuthTestTrait;
 
     public function test_authenticated_user_can_create_task(): void
     {
-        $user = $this->createMember();
+        $user   = $this->createMember();
         $colors = $this->createTaskColors();
 
         $taskData = [
-            'title' => 'Nova Tarefa de Teste',
+            'title'       => 'Nova Tarefa de Teste',
             'description' => 'Descrição da tarefa de teste',
-            'color_id' => $colors['blue']->id,
-            'due_date' => now()->addDays(5)->format('Y-m-d'),
+            'color_id'    => $colors['blue']->id,
+            'due_date'    => now()->addDays(5)->format('Y-m-d'),
         ];
 
         $response = $this->actingAs($user)
@@ -28,16 +31,16 @@ class TaskStoreTest extends TestCase
         $response->assertStatus(201)
             ->assertJson([
                 'data' => [
-                    'title' => $taskData['title'],
+                    'title'       => $taskData['title'],
                     'description' => $taskData['description'],
-                    'color' => [
+                    'color'       => [
                         'id' => $colors['blue']->id,
                     ],
-                ]
+                ],
             ]);
 
         $this->assertDatabaseHas('tasks', [
-            'title' => $taskData['title'],
+            'title'   => $taskData['title'],
             'user_id' => $user->id,
         ]);
     }
@@ -46,13 +49,13 @@ class TaskStoreTest extends TestCase
     {
         $member1 = $this->createMember();
         $member2 = $this->createMember();
-        $colors = $this->createTaskColors();
+        $colors  = $this->createTaskColors();
 
         $taskData = [
-            'title' => 'Tarefa Inválida',
+            'title'       => 'Tarefa Inválida',
             'description' => 'Esta tarefa não deve ser criada para outro usuário',
-            'color_id' => $colors['blue']->id,
-            'user_id' => $member2->id, // Tenta especificar outro usuário
+            'color_id'    => $colors['blue']->id,
+            'user_id'     => $member2->id, // Tenta especificar outro usuário
         ];
 
         $response = $this->actingAs($member1)
@@ -62,12 +65,12 @@ class TaskStoreTest extends TestCase
 
         // Mas a tarefa deve pertencer ao usuário que fez a requisição, não ao membro2
         $this->assertDatabaseHas('tasks', [
-            'title' => $taskData['title'],
+            'title'   => $taskData['title'],
             'user_id' => $member1->id, // A tarefa pertence ao membro1, não ao membro2
         ]);
 
         $this->assertDatabaseMissing('tasks', [
-            'title' => $taskData['title'],
+            'title'   => $taskData['title'],
             'user_id' => $member2->id,
         ]);
     }
@@ -77,10 +80,10 @@ class TaskStoreTest extends TestCase
         $user = $this->createMember();
 
         $invalidData = [
-            'title' => '', // título vazio
+            'title'       => '', // título vazio
             'description' => str_repeat('a', 1000), // descrição muito longa
-            'status' => 'invalid-status', // status inválido
-            'color_id' => 9999, // cor que não existe
+            'status'      => 'invalid-status', // status inválido
+            'color_id'    => 9999, // cor que não existe
         ];
 
         $response = $this->actingAs($user)
@@ -95,7 +98,7 @@ class TaskStoreTest extends TestCase
         $colors = $this->createTaskColors();
 
         $taskData = [
-            'title' => 'Tarefa Não Autorizada',
+            'title'    => 'Tarefa Não Autorizada',
             'color_id' => $colors['blue']->id,
         ];
 

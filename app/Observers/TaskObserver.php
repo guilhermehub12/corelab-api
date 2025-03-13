@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Observers;
 
 use App\Models\Task;
@@ -15,7 +17,7 @@ class TaskObserver
         Log::info('Tarefa criada', [
             'task_id' => $task->id,
             'user_id' => $task->user_id,
-            'title' => $task->title,
+            'title'   => $task->title,
         ]);
     }
 
@@ -27,20 +29,20 @@ class TaskObserver
         // Alterações de status do log
         if ($task->isDirty('status')) {
             Log::info('O status da tarefa foi alterado', [
-                'task_id' => $task->id,
-                'user_id' => $task->user_id,
-                'title' => $task->title,
+                'task_id'    => $task->id,
+                'user_id'    => $task->user_id,
+                'title'      => $task->title,
                 'old_status' => $task->getOriginal('status'),
                 'new_status' => $task->status,
             ]);
         }
-        
+
         // Alterações da data de vencimento do log
         if ($task->isDirty('due_date')) {
             Log::info('Data de vencimento da tarefa alterada', [
-                'task_id' => $task->id,
-                'user_id' => $task->user_id,
-                'title' => $task->title,
+                'task_id'      => $task->id,
+                'user_id'      => $task->user_id,
+                'title'        => $task->title,
                 'old_due_date' => $task->getOriginal('due_date'),
                 'new_due_date' => $task->due_date,
             ]);
@@ -55,7 +57,7 @@ class TaskObserver
         Log::info('Tarefa excluída', [
             'task_id' => $task->id,
             'user_id' => $task->user_id,
-            'title' => $task->title,
+            'title'   => $task->title,
         ]);
     }
 
@@ -67,7 +69,7 @@ class TaskObserver
         Log::info('Tarefa restaurada', [
             'task_id' => $task->id,
             'user_id' => $task->user_id,
-            'title' => $task->title,
+            'title'   => $task->title,
         ]);
     }
 
@@ -79,7 +81,7 @@ class TaskObserver
         Log::info('Tarefa deletada permanentemente', [
             'task_id' => $task->id,
             'user_id' => $task->user_id,
-            'title' => $task->title,
+            'title'   => $task->title,
         ]);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Services;
 
 use App\Models\Task;
@@ -7,8 +9,8 @@ use App\Models\TaskColor;
 use App\Models\User;
 use App\Repositories\Interfaces\TaskRepositoryInterface;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,7 +20,7 @@ class TaskService
 
     /**
      * TaskService constructor
-     * 
+     *
      * @param TaskRepositoryInterface $taskRepository
      */
     public function __construct(TaskRepositoryInterface $taskRepository)
@@ -56,7 +58,7 @@ class TaskService
     {
         $task = $this->taskRepository->findById($id);
 
-        if (!$task) {
+        if (! $task) {
             abort(404, 'Tarefa não encontrada');
         }
 
@@ -77,11 +79,11 @@ class TaskService
     {
         $user = Auth::user();
 
-        if (!isset($data['user_id']) && !Gate::allows('assign', Task::class)) {
+        if (! isset($data['user_id']) && ! Gate::allows('assign', Task::class)) {
             $data['user_id'] = $user->id;
         }
         $data['user_id'] = $data['user_id'] ?? $user->id;
-        $data['status'] = $data['status'] ?? 'pending';
+        $data['status']  = $data['status'] ?? 'pending';
 
         return $this->taskRepository->create($data);
     }
@@ -98,7 +100,7 @@ class TaskService
     {
         $task = $this->taskRepository->findById($id);
 
-        if (!$task) {
+        if (! $task) {
             abort(404, 'Tarefa não encontrada');
         }
 
@@ -112,7 +114,7 @@ class TaskService
 
         $updatedTask = $this->taskRepository->update($id, $data);
 
-        if (!$updatedTask) {
+        if (! $updatedTask) {
             abort(500, 'Falha ao atualizar a tarefa');
         }
 
@@ -130,7 +132,7 @@ class TaskService
     {
         $task = $this->taskRepository->findById($id);
 
-        if (!$task) {
+        if (! $task) {
             abort(404, 'Tarefa não encontrada');
         }
 
@@ -177,12 +179,13 @@ class TaskService
 
         $task = $this->taskRepository->findById($taskId);
 
-        if (!$task) {
+        if (! $task) {
             abort(404, 'Tarefa não encontrada');
         }
 
         $user = User::find($userId);
-        if (!$user) {
+
+        if (! $user) {
             abort(404, 'Usuário não encontrado');
         }
 
@@ -211,7 +214,7 @@ class TaskService
     {
         $task = $this->taskRepository->findById($taskId);
 
-        if (!$task) {
+        if (! $task) {
             abort(404, 'Tarefa não encontrada');
         }
 
@@ -221,7 +224,8 @@ class TaskService
 
         // checa se a cor existe
         $color = TaskColor::find($colorId);
-        if (!$color) {
+
+        if (! $color) {
             abort(404, 'Cor não encontrada');
         }
 
@@ -252,7 +256,7 @@ class TaskService
     {
         $task = $this->taskRepository->findById($taskId);
 
-        if (!$task) {
+        if (! $task) {
             abort(404, 'Tarefa não encontrada');
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Repositories\Interfaces;
 
 use App\Models\Task;
@@ -8,12 +10,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface TaskRepositoryInterface
 {
-     /**
-     * Obtém todas as tarefas com paginação
-     *
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
+    /**
+    * Obtém todas as tarefas com paginação
+    *
+    * @param int $perPage
+    * @return LengthAwarePaginator
+    */
     public function getAll(int $perPage = 15): LengthAwarePaginator;
 
     /**
@@ -24,7 +26,7 @@ interface TaskRepositoryInterface
      * @return LengthAwarePaginator
      */
     public function getAllForUser(int $userId, int $perPage = 15): LengthAwarePaginator;
-    
+
     /**
      * Encontra uma tarefa pelo ID
      *
@@ -32,7 +34,7 @@ interface TaskRepositoryInterface
      * @return Task|null
      */
     public function findById(int $id): ?Task;
-    
+
     /**
      * Cria uma nova tarefa
      *
@@ -40,7 +42,7 @@ interface TaskRepositoryInterface
      * @return Task
      */
     public function create(array $data): Task;
-    
+
     /**
      * Atualiza uma tarefa existente
      *
@@ -49,7 +51,7 @@ interface TaskRepositoryInterface
      * @return Task|null
      */
     public function update(int $id, array $data): ?Task;
-    
+
     /**
      * Deleta uma tarefa existente
      *
@@ -57,7 +59,7 @@ interface TaskRepositoryInterface
      * @return bool
      */
     public function delete(int $id): bool;
-    
+
     /**
      * Encontra tarefas por status para um usuário
      *
@@ -83,7 +85,7 @@ interface TaskRepositoryInterface
      * @return LengthAwarePaginator
      */
     public function getFavoritesForUser(int $userId, int $perPage = 15): LengthAwarePaginator;
-    
+
     /**
      * Alterna o status favorito de uma tarefa
      *

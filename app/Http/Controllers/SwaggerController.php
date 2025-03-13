@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types = 1);
 
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 
 /**
  * @OA\Info(
@@ -17,18 +17,18 @@ use Illuminate\Http\Request;
  *          url="https://opensource.org/licenses/MIT"
  *      )
  * )
- * 
+ *
  * @OA\Server(
  *      url=L5_SWAGGER_CONST_HOST,
  *      description="API Server"
  * )
- * 
+ *
  * @OA\SecurityScheme(
  *      securityScheme="sanctum",
  *      type="http",
  *      scheme="bearer"
  * )
- * 
+ *
  * @OA\Schema(
  *      schema="Task",
  *      @OA\Property(property="id", type="integer", example=1),
@@ -37,7 +37,7 @@ use Illuminate\Http\Request;
  *      @OA\Property(property="status", type="string", enum={"pending", "in_progress", "completed"}, example="pending"),
  *      @OA\Property(property="status_label", type="string", example="Pendente"),
  *      @OA\Property(
- *          property="color", 
+ *          property="color",
  *          type="object",
  *          @OA\Property(property="id", type="integer", example=3, description="ID da cor"),
  *          @OA\Property(property="name", type="string", example="Azul", description="Nome da cor"),
@@ -50,12 +50,12 @@ use Illuminate\Http\Request;
  *      @OA\Property(property="created_at", type="string", format="date-time", example="2025-01-01 12:00:00"),
  *      @OA\Property(property="updated_at", type="string", format="date-time", example="2025-01-02 13:00:00"),
  *      @OA\Property(
- *          property="user", 
+ *          property="user",
  *          type="object",
  *          @OA\Property(property="id", type="integer", example=3, description="ID do usuário"),
  *          @OA\Property(property="name", type="string", example="João Silva", description="Nome do usuário"),
  *          @OA\Property(
- *              property="profile", 
+ *              property="profile",
  *              type="object",
  *              @OA\Property(property="id", type="integer", example=1, description="ID do perfil"),
  *              @OA\Property(property="type", type="string", enum={"admin", "manager", "member"}, example="admin", description="Tipo do perfil"),
@@ -63,7 +63,7 @@ use Illuminate\Http\Request;
  *          )
  *      )
  * )
- * 
+ *
  * @OA\Schema(
  *     schema="User",
  *     title="User",
@@ -80,7 +80,7 @@ use Illuminate\Http\Request;
  *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-01-01 12:00:00", description="Data da criação"),
  *     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-01-02 13:00:00", description="Última data de atualização")
  * )
- * 
+ *
  * @OA\Schema(
  *      schema="Error",
  *      @OA\Property(property="message", type="string", example="Mensagem de erro"),
@@ -94,7 +94,7 @@ use Illuminate\Http\Request;
  *          )
  *      )
  * )
- * 
+ *
  * @OA\Schema(
  *     schema="TaskColor",
  *     title="taskColor",

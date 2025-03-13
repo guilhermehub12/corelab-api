@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -23,7 +25,7 @@ class TaskController extends Controller
 
     /**
      * TaskController constructor
-     * 
+     *
      * @param TaskService $taskService
      */
     public function __construct(TaskService $taskService)
@@ -33,7 +35,7 @@ class TaskController extends Controller
 
     /**
      * Lista todas as tarefas.
-     * 
+     *
      * @OA\Get(
      *     path="/api/tasks",
      *     operationId="getTasks",
@@ -68,16 +70,18 @@ class TaskController extends Controller
     {
         if (request()->has('status')) {
             $tasks = $this->taskService->getTasksByStatus(request('status'));
+
             return TaskResource::collection($tasks);
         }
 
         $tasks = $this->taskService->getAllTasks();
+
         return TaskResource::collection($tasks);
     }
 
     /**
      * Armarzena uma nova tarefa.
-     * 
+     *
      * @OA\Post(
      *     path="/api/tasks",
      *     operationId="storeTask",
@@ -105,6 +109,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         $task = $this->taskService->createTask($request->validated());
+
         return (new TaskResource($task))
             ->response()
             ->setStatusCode(201);
@@ -112,7 +117,7 @@ class TaskController extends Controller
 
     /**
      * Exibe uma tarefa específica.
-     * 
+     *
      * @OA\Get(
      *     path="/api/tasks/{id}",
      *     operationId="getTask",
@@ -144,12 +149,13 @@ class TaskController extends Controller
     public function show(int $id): TaskResource
     {
         $task = $this->taskService->getTask($id);
+
         return new TaskResource($task);
     }
 
     /**
      * Atualiza uma tarefa específica.
-     * 
+     *
      * @OA\Put(
      *     path="/api/tasks/{id}",
      *     operationId="updateTask",
@@ -186,12 +192,13 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, int $id): TaskResource
     {
         $task = $this->taskService->updateTask($id, $request->validated());
+
         return new TaskResource($task);
     }
 
     /**
      * Remove a tarefa específica.
-     * 
+     *
      * @OA\Delete(
      *     path="/api/tasks/{id}",
      *     operationId="deleteTask",
@@ -214,12 +221,13 @@ class TaskController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $this->taskService->deleteTask($id);
+
         return response()->json(null, 204);
     }
 
     /**
      * Obter todas as cores disponíveis para tarefas.
-     * 
+     *
      * @OA\Get(
      *     path="/api/tasks/colors",
      *     operationId="getTaskColors",
@@ -244,12 +252,13 @@ class TaskController extends Controller
     public function colors(): AnonymousResourceCollection
     {
         $colors = $this->taskService->getTaskColors();
+
         return TaskColorResource::collection($colors);
     }
 
     /**
      * Atualizar a cor de uma tarefa específica.
-     * 
+     *
      * @OA\Put(
      *     path="/api/tasks/{id}/color/{colorId}",
      *     operationId="updateTaskColor",
@@ -288,12 +297,13 @@ class TaskController extends Controller
     public function updateColor(int $id, int $colorId): TaskResource
     {
         $task = $this->taskService->updateTaskColor($id, $colorId);
+
         return new TaskResource($task);
     }
 
     /**
      * Obter as tarefas favoritas do usuário autenticado.
-     * 
+     *
      * @OA\Get(
      *     path="/api/tasks/favorites",
      *     operationId="getFavoriteTasks",
@@ -320,12 +330,13 @@ class TaskController extends Controller
     public function favorites(): AnonymousResourceCollection
     {
         $favoriteTasks = $this->taskService->getFavoriteTasks();
+
         return TaskResource::collection($favoriteTasks);
     }
 
     /**
      * Alternar o status de favorito de uma tarefa.
-     * 
+     *
      * @OA\Post(
      *     path="/api/tasks/{id}/favorite",
      *     operationId="toggleFavoriteTask",
@@ -362,7 +373,7 @@ class TaskController extends Controller
 
         return response()->json([
             'is_favorited' => $isFavorited,
-            'message' => $message
+            'message'      => $message,
         ]);
     }
 }

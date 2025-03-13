@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Policies;
 
 use App\Models\Task;
@@ -95,7 +97,7 @@ class TaskPolicy
         // Somente administradores e gerentes podem ver todas as tarefas no sistema
         return $user->isAdmin() || $user->isManager();
     }
-    
+
     /**
      * Determine whether the user can assign tasks to other users.
      */

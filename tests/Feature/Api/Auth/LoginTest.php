@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Auth;
 
 use Tests\AuthTestTrait;
@@ -19,7 +21,7 @@ class LoginTest extends TestCase
         $user->save();
 
         $response = $this->postJson('/api/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password123',
         ]);
 
@@ -31,9 +33,9 @@ class LoginTest extends TestCase
                     'email',
                     'profile',
                     'created_at',
-                    'updated_at'
+                    'updated_at',
                 ],
-                'token'
+                'token',
             ]);
     }
 
@@ -42,7 +44,7 @@ class LoginTest extends TestCase
         $user = $this->createMember();
 
         $response = $this->postJson('/api/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'senhaincorreta',
         ]);
 
@@ -53,7 +55,7 @@ class LoginTest extends TestCase
     public function test_user_cannot_login_with_nonexistent_email(): void
     {
         $response = $this->postJson('/api/login', [
-            'email' => 'nonexistent@email.com',
+            'email'    => 'nonexistent@email.com',
             'password' => 'password123',
         ]);
 
@@ -71,10 +73,10 @@ class LoginTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
+                    'id'    => $user->id,
+                    'name'  => $user->name,
                     'email' => $user->email,
-                ]
+                ],
             ]);
     }
 

@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Providers;
 
 use App\Repositories\Interfaces\TaskRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Services\TaskService;
-use App\Services\AuthService;
 use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
+use App\Services\AuthService;
+use App\Services\TaskService;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

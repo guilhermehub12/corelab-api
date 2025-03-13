@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +21,7 @@ class Task extends BaseModel
         'description',
         'status',
         'color_id',
-        'due_date'
+        'due_date',
     ];
 
     /**
@@ -64,7 +66,7 @@ class Task extends BaseModel
     // Método para verificar se a tarefa está favoritada pelo usuário atual
     public function getIsFavoritedAttribute(): bool
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return false;
         }
 
@@ -73,7 +75,7 @@ class Task extends BaseModel
 
     public function favorite(): void
     {
-        if (!$this->is_favorited && Auth::check()) {
+        if (! $this->is_favorited && Auth::check()) {
             $this->favoritedBy()->attach(Auth::id());
         }
     }
@@ -88,17 +90,18 @@ class Task extends BaseModel
     // Método para alternar o estado de favorito da tarefa
     public function toggleFavorite(): bool
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return false;
         }
-        
+
         if ($this->is_favorited) {
             $this->unfavorite();
+
             return false;
         } else {
             $this->favorite();
+
             return true;
         }
     }
-
 }

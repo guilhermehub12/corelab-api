@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +14,7 @@ class TaskColor extends BaseModel
     protected $fillable = [
         'name',
         'hex_code',
-        'description'
+        'description',
     ];
 
     /**
@@ -31,7 +33,7 @@ class TaskColor extends BaseModel
     {
         return $this->hasMany(Task::class, 'color_id');
     }
-    
+
     /**
      * Cria um escopo de uma consulta para incluir apenas cores ativas.
      */
@@ -39,5 +41,4 @@ class TaskColor extends BaseModel
     {
         return $query->where('is_active', true);
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -15,11 +17,11 @@ class TaskColorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'hex_code' => $this->hex_code,
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'hex_code'    => $this->hex_code,
             'description' => $this->description,
-            'is_active' => $this->is_active,
+            'is_active'   => $this->is_active,
         ];
     }
 }

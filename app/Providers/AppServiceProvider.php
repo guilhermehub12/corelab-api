@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Providers;
 
 use Carbon\CarbonImmutable;
@@ -96,7 +98,7 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('api', function ($request) {
             $user = $request->user();
-            
+
             // Limitação da api diferente com base no perfil do usuário
             if ($user) {
                 if ($user->isAdmin()) {
@@ -104,28 +106,29 @@ class AppServiceProvider extends ServiceProvider
                 } elseif ($user->isManager()) {
                     return Limit::perMinute(90)->by($user->id);
                 }
+
                 return Limit::perMinute(60)->by($user->id);
             }
-            
+
             return Limit::perMinute(30)->by($request->ip());
         });
-        
+
         // Limitação de requisições para criação de tarefas
         RateLimiter::for('task-creation', function ($request) {
             $user = $request->user();
-            
+
             if ($user) {
                 if ($user->isAdmin()) {
                     return Limit::perMinute(30)->by($user->id);
                 } elseif ($user->isManager()) {
                     return Limit::perMinute(20)->by($user->id);
                 }
+
                 return Limit::perMinute(10)->by($user->id);
             }
-            
+
             return Limit::perMinute(5)->by($request->ip());
         });
-
     }
 
     /**

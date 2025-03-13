@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Task;
 
 use Tests\AuthTestTrait;
@@ -8,19 +10,20 @@ use Tests\TestCase;
 
 class TaskUpdateTest extends TestCase
 {
-    use TaskTestTrait, AuthTestTrait;
+    use TaskTestTrait;
+    use AuthTestTrait;
 
     public function test_user_can_update_own_task(): void
     {
-        $user = $this->createMember();
-        $task = $this->createTask($user);
+        $user   = $this->createMember();
+        $task   = $this->createTask($user);
         $colors = $this->createTaskColors();
 
         $updateData = [
-            'title' => 'Título Atualizado',
+            'title'       => 'Título Atualizado',
             'description' => 'Descrição atualizada',
-            'status' => 'in_progress',
-            'color_id' => $colors['red']->id,
+            'status'      => 'in_progress',
+            'color_id'    => $colors['red']->id,
         ];
 
         $response = $this->actingAs($user)
@@ -29,31 +32,31 @@ class TaskUpdateTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id' => $task->id,
-                    'title' => $updateData['title'],
+                    'id'          => $task->id,
+                    'title'       => $updateData['title'],
                     'description' => $updateData['description'],
-                    'status' => $updateData['status'],
-                    'color' => [
+                    'status'      => $updateData['status'],
+                    'color'       => [
                         'id' => $colors['red']->id,
                     ],
-                ]
+                ],
             ]);
 
         $this->assertDatabaseHas('tasks', [
-            'id' => $task->id,
-            'title' => $updateData['title'],
+            'id'     => $task->id,
+            'title'  => $updateData['title'],
             'status' => $updateData['status'],
         ]);
     }
 
     public function test_admin_can_update_any_task(): void
     {
-        $admin = $this->createAdmin();
+        $admin  = $this->createAdmin();
         $member = $this->createMember();
-        $task = $this->createTask($member);
+        $task   = $this->createTask($member);
 
         $updateData = [
-            'title' => 'Atualizado pelo Admin',
+            'title'  => 'Atualizado pelo Admin',
             'status' => 'completed',
         ];
 
@@ -63,9 +66,9 @@ class TaskUpdateTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('tasks', [
-            'id' => $task->id,
-            'title' => $updateData['title'],
-            'status' => $updateData['status'],
+            'id'      => $task->id,
+            'title'   => $updateData['title'],
+            'status'  => $updateData['status'],
             'user_id' => $member->id, // O proprietário não deve mudar
         ]);
     }
@@ -73,11 +76,11 @@ class TaskUpdateTest extends TestCase
     public function test_manager_can_update_any_task(): void
     {
         $manager = $this->createManager();
-        $member = $this->createMember();
-        $task = $this->createTask($member);
+        $member  = $this->createMember();
+        $task    = $this->createTask($member);
 
         $updateData = [
-            'title' => 'Atualizado pelo Gerente',
+            'title'  => 'Atualizado pelo Gerente',
             'status' => 'completed',
         ];
 
@@ -87,9 +90,9 @@ class TaskUpdateTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('tasks', [
-            'id' => $task->id,
-            'title' => $updateData['title'],
-            'status' => $updateData['status'],
+            'id'      => $task->id,
+            'title'   => $updateData['title'],
+            'status'  => $updateData['status'],
             'user_id' => $member->id, // O proprietário não deve mudar
         ]);
     }
@@ -98,10 +101,10 @@ class TaskUpdateTest extends TestCase
     {
         $member1 = $this->createMember();
         $member2 = $this->createMember();
-        $task = $this->createTask($member2);
+        $task    = $this->createTask($member2);
 
         $updateData = [
-            'title' => 'Tentativa de Atualização',
+            'title'  => 'Tentativa de Atualização',
             'status' => 'completed',
         ];
 
@@ -111,7 +114,7 @@ class TaskUpdateTest extends TestCase
         $response->assertStatus(403); // Forbidden
 
         $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id,
+            'id'    => $task->id,
             'title' => $updateData['title'],
         ]);
     }
@@ -120,10 +123,10 @@ class TaskUpdateTest extends TestCase
     {
         $member1 = $this->createMember();
         $member2 = $this->createMember();
-        $task = $this->createTask($member1);
+        $task    = $this->createTask($member1);
 
         $updateData = [
-            'title' => 'Tentativa de Reassinamento',
+            'title'   => 'Tentativa de Reassinamento',
             'user_id' => $member2->id, // Tentando mudar o proprietário
         ];
 
@@ -134,8 +137,8 @@ class TaskUpdateTest extends TestCase
 
         // Mas o campo user_id deve ser ignorado
         $this->assertDatabaseHas('tasks', [
-            'id' => $task->id,
-            'title' => $updateData['title'],
+            'id'      => $task->id,
+            'title'   => $updateData['title'],
             'user_id' => $member1->id, // Continua pertencendo ao membro1
         ]);
     }
@@ -146,8 +149,8 @@ class TaskUpdateTest extends TestCase
         $task = $this->createTask($user);
 
         $invalidData = [
-            'title' => str_repeat('a', 300), // título muito longo
-            'status' => 'invalid-status', // status inválido
+            'title'    => str_repeat('a', 300), // título muito longo
+            'status'   => 'invalid-status', // status inválido
             'color_id' => 9999, // cor que não existe
         ];
 

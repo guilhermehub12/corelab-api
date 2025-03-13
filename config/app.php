@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 return [
 
     /*
@@ -120,11 +122,10 @@ return [
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-
- /*
+    /*
     |--------------------------------------------------------------------------
     | Application API Token
     |--------------------------------------------------------------------------
@@ -135,10 +136,6 @@ return [
     */
     'api_token' => env('API_TOKEN'),
 
-
     'authToken' => env('AUTH_TOKEN', null),
-
-
-
 
 ];

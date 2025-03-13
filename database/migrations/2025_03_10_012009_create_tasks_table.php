@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class () extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->date('due_date')->nullable();
-            
+
             $table->index(['user_id', 'status']);
             $table->index('due_date');
             $table->timestamp('created_at')->useCurrent();

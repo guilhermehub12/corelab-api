@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -20,10 +22,10 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     protected AuthService $authService;
-    
+
     /**
      * AuthController constructor
-     * 
+     *
      * @param AuthService $authService
      */
     public function __construct(AuthService $authService)
@@ -33,7 +35,7 @@ class AuthController extends Controller
 
     /**
      * Registra um novo usuário.
-     * 
+     *
      * @OA\Post(
      *     path="/api/register",
      *     operationId="registerUser",
@@ -56,23 +58,23 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=422, description="Erro de validação")
      * )
-     * 
+     *
      * @param RegisterRequest $request
      * @return JsonResponse
      */
     public function register(RegisterRequest $request): JsonResponse
     {
         $result = $this->authService->register($request->validated());
-        
+
         return response()->json([
-            'user' => new UserResource($result['user']),
-            'token' => $result['token']
+            'user'  => new UserResource($result['user']),
+            'token' => $result['token'],
         ], 201);
     }
 
     /**
      * Loga usuário e cria um token.
-     * 
+     *
      * @OA\Post(
      *     path="/api/login",
      *     operationId="loginUser",
@@ -95,7 +97,7 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=401, description="Credenciais inválidas")
      * )
-     * 
+     *
      * @param LoginRequest $request
      * @return JsonResponse
      * @throws ValidationException
@@ -103,16 +105,16 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         $result = $this->authService->login($request->validated());
-        
+
         return response()->json([
-            'user' => new UserResource($result['user']),
-            'token' => $result['token']
+            'user'  => new UserResource($result['user']),
+            'token' => $result['token'],
         ]);
     }
 
     /**
      * Desloga usuário (revoga o token).
-     * 
+     *
      * @OA\Post(
      *     path="/api/logout",
      *     operationId="logoutUser",
@@ -128,14 +130,14 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=401, description="Não autenticado")
      * )
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      */
     public function logout(Request $request): JsonResponse
     {
         $this->authService->logout($request->user());
-        
+
         return response()->json([
             'message' => 'Deslogado com sucesso',
         ]);
@@ -143,7 +145,7 @@ class AuthController extends Controller
 
     /**
      * Obtenha o usuário autenticado.
-     * 
+     *
      * @OA\Get(
      *     path="/api/user",
      *     operationId="getAuthUser",
@@ -162,7 +164,7 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(response=401, description="Não autenticado")
      * )
-     * 
+     *
      * @param Request $request
      * @return UserResource
      */
@@ -170,5 +172,4 @@ class AuthController extends Controller
     {
         return new UserResource($request->user());
     }
-
 }

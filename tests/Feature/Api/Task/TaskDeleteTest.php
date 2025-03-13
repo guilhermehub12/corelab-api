@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Task;
 
 use Tests\AuthTestTrait;
@@ -8,7 +10,8 @@ use Tests\TestCase;
 
 class TaskDeleteTest extends TestCase
 {
-    use TaskTestTrait, AuthTestTrait;
+    use TaskTestTrait;
+    use AuthTestTrait;
 
     public function test_user_can_delete_own_task(): void
     {
@@ -21,15 +24,15 @@ class TaskDeleteTest extends TestCase
         $response->assertStatus(204); // No content
 
         $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
     }
 
     public function test_admin_can_delete_any_task(): void
     {
-        $admin = $this->createAdmin();
+        $admin  = $this->createAdmin();
         $member = $this->createMember();
-        $task = $this->createTask($member);
+        $task   = $this->createTask($member);
 
         $response = $this->actingAs($admin)
             ->deleteJson("/api/tasks/{$task->id}");
@@ -37,15 +40,15 @@ class TaskDeleteTest extends TestCase
         $response->assertStatus(204);
 
         $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
     }
 
     public function test_manager_can_delete_any_task(): void
     {
         $manager = $this->createManager();
-        $member = $this->createMember();
-        $task = $this->createTask($member);
+        $member  = $this->createMember();
+        $task    = $this->createTask($member);
 
         $response = $this->actingAs($manager)
             ->deleteJson("/api/tasks/{$task->id}");
@@ -53,7 +56,7 @@ class TaskDeleteTest extends TestCase
         $response->assertStatus(204);
 
         $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
     }
 
@@ -61,7 +64,7 @@ class TaskDeleteTest extends TestCase
     {
         $member1 = $this->createMember();
         $member2 = $this->createMember();
-        $task = $this->createTask($member2);
+        $task    = $this->createTask($member2);
 
         $response = $this->actingAs($member1)
             ->deleteJson("/api/tasks/{$task->id}");
@@ -69,7 +72,7 @@ class TaskDeleteTest extends TestCase
         $response->assertStatus(403); // Forbidden
 
         $this->assertDatabaseHas('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
     }
 
@@ -85,7 +88,7 @@ class TaskDeleteTest extends TestCase
 
     public function test_deleting_task_also_removes_its_favorites(): void
     {
-        $admin = $this->createAdmin();
+        $admin   = $this->createAdmin();
         $member1 = $this->createMember();
         $member2 = $this->createMember();
 
@@ -106,7 +109,7 @@ class TaskDeleteTest extends TestCase
 
         // Verificar que a tarefa foi excluída
         $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
 
         // Verificar que os favoritos foram excluídos
@@ -123,7 +126,7 @@ class TaskDeleteTest extends TestCase
         $response->assertStatus(401);
 
         $this->assertDatabaseHas('tasks', [
-            'id' => $task->id
+            'id' => $task->id,
         ]);
     }
 }

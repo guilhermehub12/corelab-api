@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
 // Rotas públicas
-Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 // Rotas protegidas por autenticação
 Route::middleware(['auth:sanctum'])->group(function () {

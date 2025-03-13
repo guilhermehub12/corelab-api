@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Factories;
 
 use App\Models\TaskColor;
@@ -19,11 +21,11 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'title' => fake()->sentence(),
+            'user_id'     => User::factory(),
+            'title'       => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'status' => fake()->randomElement(['pending', 'in_progress', 'completed']),
-            'color_id' => function () {
+            'status'      => fake()->randomElement(['pending', 'in_progress', 'completed']),
+            'color_id'    => function () {
                 return TaskColor::inRandomOrder()->first()?->id ?? 1;
             },
             'due_date' => fake()->dateTimeBetween('now', '+30 days'),
@@ -33,7 +35,7 @@ class TaskFactory extends Factory
     /**
      * Define uma tarefa como pendente.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     public function pending()
     {
@@ -43,11 +45,11 @@ class TaskFactory extends Factory
             ];
         });
     }
-    
+
     /**
      * Define uma tarefa como em andamento.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     public function inProgress()
     {
@@ -57,11 +59,11 @@ class TaskFactory extends Factory
             ];
         });
     }
-    
+
     /**
      * Define uma tarefa como concluída.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     public function completed()
     {
@@ -76,13 +78,13 @@ class TaskFactory extends Factory
      * Define uma tarefa com uma cor específica.
      *
      * @param string $colorName O nome da cor (ex.: 'Vermelho', 'Azul')
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
      */
     public function withColor(string $colorName)
     {
         return $this->state(function (array $attributes) use ($colorName) {
             $colorId = TaskColor::where('name', $colorName)->first()?->id;
-            
+
             return [
                 'color_id' => $colorId,
             ];

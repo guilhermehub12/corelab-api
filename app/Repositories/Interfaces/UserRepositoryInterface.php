@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Repositories\Interfaces;
 
 use App\Models\User;
@@ -13,7 +15,7 @@ interface UserRepositoryInterface
      * @return User|null
      */
     public function findByEmail(string $email): ?User;
-    
+
     /**
      * Encontra um usuário pelo ID.
      *
@@ -21,7 +23,7 @@ interface UserRepositoryInterface
      * @return User|null
      */
     public function findById(int $id): ?User;
-    
+
     /**
      * Cria um novo usuário.
      *
@@ -29,7 +31,7 @@ interface UserRepositoryInterface
      * @return User
      */
     public function create(array $data): User;
-    
+
     /**
      * Atualiza um usuário existente.
      *
@@ -38,7 +40,7 @@ interface UserRepositoryInterface
      * @return User|null
      */
     public function update(int $id, array $data): ?User;
-    
+
     /**
      * Deleta todos os tokens de um usuário.
      *
@@ -46,7 +48,7 @@ interface UserRepositoryInterface
      * @return bool
      */
     public function deleteTokens(int $userId): bool;
-    
+
     /**
      * Cria um novo token para um usuário.
      *

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Task;
 
 use Tests\AuthTestTrait;
@@ -8,7 +10,8 @@ use Tests\TestCase;
 
 class TaskFavoritesTest extends TestCase
 {
-    use TaskTestTrait, AuthTestTrait;
+    use TaskTestTrait;
+    use AuthTestTrait;
 
     public function test_user_can_favorite_task(): void
     {
@@ -21,7 +24,7 @@ class TaskFavoritesTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'is_favorited' => true,
-                'message' => 'Tarefa adicionada aos favoritos',
+                'message'      => 'Tarefa adicionada aos favoritos',
             ]);
 
         $this->assertDatabaseHas('task_favorites', [
@@ -46,7 +49,7 @@ class TaskFavoritesTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'is_favorited' => false,
-                'message' => 'Tarefa removida dos favoritos',
+                'message'      => 'Tarefa removida dos favoritos',
             ]);
 
         $this->assertDatabaseMissing('task_favorites', [
@@ -59,7 +62,7 @@ class TaskFavoritesTest extends TestCase
     {
         $member1 = $this->createMember();
         $member2 = $this->createMember();
-        $task = $this->createTask($member2);
+        $task    = $this->createTask($member2);
 
         // member1 tenta favoritar tarefa do member2
         $response = $this->actingAs($member1)
@@ -68,7 +71,7 @@ class TaskFavoritesTest extends TestCase
         // Mesmo que não possa visualizar, deve poder favoritar
         $response->assertStatus(403)
             ->assertJson([
-                'message' => 'Você não está autorizado a acessar esta tarefa'
+                'message' => 'Você não está autorizado a acessar esta tarefa',
             ]);
 
         $this->assertDatabaseCount('task_favorites', 0);
@@ -90,9 +93,9 @@ class TaskFavoritesTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id' => $task->id,
+                    'id'           => $task->id,
                     'is_favorited' => true,
-                ]
+                ],
             ]);
     }
 

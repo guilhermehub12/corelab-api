@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests;
 
 use App\Models\Task;
@@ -16,18 +18,18 @@ trait TaskTestTrait
         $blue = TaskColor::firstOrCreate(
             ['name' => 'Azul'],
             [
-                'hex_code' => '#4285F4',
+                'hex_code'    => '#4285F4',
                 'description' => 'Azul padrão para tarefas normais',
-                'is_active' => true
+                'is_active'   => true,
             ]
         );
 
         $red = TaskColor::firstOrCreate(
             ['name' => 'Vermelho'],
             [
-                'hex_code' => '#FF5252',
+                'hex_code'    => '#FF5252',
                 'description' => 'Vermelho vibrante para tarefas urgentes',
-                'is_active' => true
+                'is_active'   => true,
             ]
         );
 
@@ -42,7 +44,7 @@ trait TaskTestTrait
         $colors = $this->createTaskColors();
 
         return Task::factory()->create(array_merge([
-            'user_id' => $user->id,
+            'user_id'  => $user->id,
             'color_id' => $colors['blue']->id,
         ], $attributes));
     }

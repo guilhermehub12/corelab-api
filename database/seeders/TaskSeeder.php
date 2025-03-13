@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Task;
 use App\Models\TaskFavorite;
 use App\Models\User;
-use App\Models\Profile;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
@@ -22,6 +22,7 @@ class TaskSeeder extends Seeder
         // Se não houver usuários com perfis válidos, interrompe o seeder
         if ($users->isEmpty()) {
             $this->command->info('Nenhum usuário encontrado para criar tarefas.');
+
             return;
         }
 
@@ -32,10 +33,10 @@ class TaskSeeder extends Seeder
 
             // Número de tarefas com base no perfil do usuário
             $taskCount = match ($profileType) {
-                'admin' => 3,
+                'admin'   => 3,
                 'manager' => 5,
-                'member' => 8,
-                default => 5
+                'member'  => 8,
+                default   => 5
             };
 
             // Cria tarefas de cada status
@@ -78,7 +79,7 @@ class TaskSeeder extends Seeder
             ->pending()
             ->withColor('Vermelho')
             ->create([
-                'user_id' => $userId,
+                'user_id'  => $userId,
                 'due_date' => now()->subDays(rand(1, 10)),
             ]);
     }
@@ -90,6 +91,7 @@ class TaskSeeder extends Seeder
     {
         // Verifica se existem tarefas antes de tentar criar favoritos
         $taskCount = Task::count();
+
         if ($taskCount === 0) {
             return;
         }
@@ -109,7 +111,7 @@ class TaskSeeder extends Seeder
             foreach ($taskIds as $taskId) {
                 TaskFavorite::create([
                     'user_id' => $user->id,
-                    'task_id' => $taskId
+                    'task_id' => $taskId,
                 ]);
             }
         }

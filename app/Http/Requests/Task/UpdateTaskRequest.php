@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Task;
 
 /**
@@ -32,9 +34,9 @@ class UpdateTaskRequest extends BaseTaskRequest
     public function messages(): array
     {
         return [
-            'title.min' => 'O título da tarefa deve ter pelo menos :min caracteres.',
+            'title.min'               => 'O título da tarefa deve ter pelo menos :min caracteres.',
             'due_date.after_or_equal' => 'A data de vencimento deve ser hoje ou uma data futura.',
-            'color_id.exists' => 'A cor selecionada não existe.',
+            'color_id.exists'         => 'A cor selecionada não existe.',
         ];
     }
 }

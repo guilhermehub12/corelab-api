@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Task;
 
 use Tests\AuthTestTrait;
@@ -8,12 +10,13 @@ use Tests\TestCase;
 
 class TaskShowTest extends TestCase
 {
-    use TaskTestTrait, AuthTestTrait;
+    use TaskTestTrait;
+    use AuthTestTrait;
 
     public function test_admin_can_view_any_task(): void
     {
         // Criar admin e membro
-        $admin = $this->createAdmin();
+        $admin  = $this->createAdmin();
         $member = $this->createMember();
 
         // Criar tarefa para o membro
@@ -26,9 +29,9 @@ class TaskShowTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id' => $task->id,
+                    'id'    => $task->id,
                     'title' => $task->title,
-                ]
+                ],
             ]);
     }
 
@@ -36,7 +39,7 @@ class TaskShowTest extends TestCase
     {
         // Criar gerente e membro
         $manager = $this->createManager();
-        $member = $this->createMember();
+        $member  = $this->createMember();
 
         // Criar tarefa para o membro
         $task = $this->createTask($member);
@@ -48,9 +51,9 @@ class TaskShowTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id' => $task->id,
+                    'id'    => $task->id,
                     'title' => $task->title,
-                ]
+                ],
             ]);
     }
 
@@ -69,9 +72,9 @@ class TaskShowTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'id' => $task->id,
+                    'id'    => $task->id,
                     'title' => $task->title,
-                ]
+                ],
             ]);
     }
 

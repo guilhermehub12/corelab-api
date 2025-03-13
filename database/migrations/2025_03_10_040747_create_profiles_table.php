@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class () extends Migration
 {
     /**
      * Run the migrations.
@@ -23,22 +25,22 @@ return new class extends Migration
         // Insere perfis
         DB::table('profiles')->insert([
             [
-                'type' => 'admin',
+                'type'        => 'admin',
                 'description' => 'Administrador',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
-                'type' => 'manager',
+                'type'        => 'manager',
                 'description' => 'Gerente de equipe',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
             [
-                'type' => 'member',
+                'type'        => 'member',
                 'description' => 'Membro da equipe',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at'  => now(),
+                'updated_at'  => now(),
             ],
         ]);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,11 +25,11 @@ abstract class BaseTaskRequest extends FormRequest
     protected function commonRules(): array
     {
         return [
-            'title' => 'string|min:3|max:255',
+            'title'       => 'string|min:3|max:255',
             'description' => 'nullable|string',
-            'status' => 'in:pending,in_progress,completed',
-            'due_date' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
-            'color_id' => 'nullable|exists:task_colors,id',
+            'status'      => 'in:pending,in_progress,completed',
+            'due_date'    => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
+            'color_id'    => 'nullable|exists:task_colors,id',
         ];
     }
 }

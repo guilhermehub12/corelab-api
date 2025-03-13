@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\Profile;
@@ -19,9 +21,9 @@ class RegisterTest extends TestCase
     public function test_user_can_register()
     {
         $userData = [
-            'name' => 'Joãozinho',
-            'email' => 'joao@email.com',
-            'password' => 'password123',
+            'name'                  => 'Joãozinho',
+            'email'                 => 'joao@email.com',
+            'password'              => 'password123',
             'password_confirmation' => 'password123',
         ];
 
@@ -35,20 +37,20 @@ class RegisterTest extends TestCase
                     'email',
                     'profile',
                     'created_at',
-                    'updated_at'
+                    'updated_at',
                 ],
-                'token'
+                'token',
             ]);
 
         $this->assertDatabaseHas('users', [
             'email' => $userData['email'],
-            'name' => $userData['name'],
+            'name'  => $userData['name'],
         ]);
 
         // Verifica se o usuário recebeu o perfil padrão (member)
         $defaultProfileType = Profile::where('type', 'member')->first()->id;
         $this->assertDatabaseHas('users', [
-            'email' => $userData['email'],
+            'email'      => $userData['email'],
             'profile_id' => $defaultProfileType,
         ]);
     }
@@ -59,9 +61,9 @@ class RegisterTest extends TestCase
         $existingUser = $this->createMember();
 
         $userData = [
-            'name' => 'Another User',
-            'email' => $existingUser->email,
-            'password' => 'password123',
+            'name'                  => 'Another User',
+            'email'                 => $existingUser->email,
+            'password'              => 'password123',
             'password_confirmation' => 'password123',
         ];
 
@@ -74,9 +76,9 @@ class RegisterTest extends TestCase
     public function test_user_cannot_register_with_empty_name(): void
     {
         $invalidData = [
-            'name' => '',
-            'email' => 'joao@email.com',
-            'password' => 'password123',
+            'name'                  => '',
+            'email'                 => 'joao@email.com',
+            'password'              => 'password123',
             'password_confirmation' => 'password123',
         ];
 
@@ -89,9 +91,9 @@ class RegisterTest extends TestCase
     public function test_user_cannot_register_with_invalid_email(): void
     {
         $invalidData = [
-            'name' => 'Joãozinho',
-            'email' => 'email-invalido',
-            'password' => 'password123',
+            'name'                  => 'Joãozinho',
+            'email'                 => 'email-invalido',
+            'password'              => 'password123',
             'password_confirmation' => 'password123',
         ];
 
@@ -104,9 +106,9 @@ class RegisterTest extends TestCase
     public function test_user_cannot_register_with_invalid_password(): void
     {
         $invalidData = [
-            'name' => 'Joãozinho',
-            'email' => 'joao@email.com',
-            'password' => 'senha',
+            'name'                  => 'Joãozinho',
+            'email'                 => 'joao@email.com',
+            'password'              => 'senha',
             'password_confirmation' => 'senha-incorreta',
         ];
 

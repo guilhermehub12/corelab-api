@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Repositories;
 
 use App\Models\Task;
@@ -14,7 +16,7 @@ class TaskRepository implements TaskRepositoryInterface
 
     /**
      * TaskRepository constructor
-     * 
+     *
      * @param Task $task
      */
     public function __construct(Task $task)
@@ -104,7 +106,7 @@ class TaskRepository implements TaskRepositoryInterface
     {
         $task = $this->findById($id);
 
-        if (!$task) {
+        if (! $task) {
             return null;
         }
 
@@ -135,7 +137,7 @@ class TaskRepository implements TaskRepositoryInterface
     {
         $task = $this->findById($id);
 
-        if (!$task) {
+        if (! $task) {
             return false;
         }
 
@@ -222,7 +224,7 @@ class TaskRepository implements TaskRepositoryInterface
     {
         $task = $this->findById($taskId);
 
-        if (!$task) {
+        if (! $task) {
             return false;
         }
 
@@ -256,6 +258,7 @@ class TaskRepository implements TaskRepositoryInterface
 
         // Limpa status caches
         $statuses = ['pending', 'in_progress', 'completed'];
+
         foreach ($statuses as $status) {
             Cache::forget("user.{$userId}.tasks.status.{$status}");
         }
@@ -272,6 +275,7 @@ class TaskRepository implements TaskRepositoryInterface
 
         // Limpa status caches para todas tarefas
         $statuses = ['pending', 'in_progress', 'completed'];
+
         foreach ($statuses as $status) {
             Cache::forget("tasks.status.{$status}");
         }
