@@ -80,7 +80,7 @@ class TaskService
         if (!isset($data['user_id']) && !Gate::allows('assign', Task::class)) {
             $data['user_id'] = $user->id;
         }
-
+        $data['user_id'] = $data['user_id'] ?? $user->id;
         $data['status'] = $data['status'] ?? 'pending';
 
         return $this->taskRepository->create($data);

@@ -467,6 +467,26 @@
                         "type": "string",
                         "example": "Pendente"
                     },
+                    "color": {
+                        "properties": {
+                            "id": {
+                                "description": "ID da cor",
+                                "type": "integer",
+                                "example": 3
+                            },
+                            "name": {
+                                "description": "Nome da cor",
+                                "type": "string",
+                                "example": "Azul"
+                            },
+                            "hex_code": {
+                                "description": "Cor em formato hexadecimal",
+                                "type": "string",
+                                "example": "#0000FF"
+                            }
+                        },
+                        "type": "object"
+                    },
                     "due_date": {
                         "type": "string",
                         "format": "date",
@@ -475,6 +495,14 @@
                     "is_overdue": {
                         "type": "boolean",
                         "example": false
+                    },
+                    "is_favorited": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "favorites_count": {
+                        "type": "integer",
+                        "example": 1
                     },
                     "created_at": {
                         "type": "string",
@@ -485,6 +513,46 @@
                         "type": "string",
                         "format": "date-time",
                         "example": "2023-01-02 13:00:00"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "description": "ID do usuário",
+                                "type": "integer",
+                                "example": 3
+                            },
+                            "name": {
+                                "description": "Nome do usuário",
+                                "type": "string",
+                                "example": "João Silva"
+                            },
+                            "profile": {
+                                "properties": {
+                                    "id": {
+                                        "description": "ID do perfil",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "type": {
+                                        "description": "Tipo do perfil",
+                                        "type": "string",
+                                        "enum": [
+                                            "admin",
+                                            "manager",
+                                            "member"
+                                        ],
+                                        "example": "admin"
+                                    },
+                                    "description": {
+                                        "description": "Descrição do perfil",
+                                        "type": "string",
+                                        "example": "Administrador"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -629,6 +697,7 @@
                         "example": "Escrever documentação abrangente para o projeto"
                     },
                     "status": {
+                        "description": "Status da tarefa",
                         "type": "string",
                         "enum": [
                             "pending",
@@ -638,10 +707,12 @@
                         "example": "pending"
                     },
                     "color_id": {
+                        "description": "ID da cor da tarefa",
                         "type": "integer",
                         "example": 2
                     },
                     "due_date": {
+                        "description": "Data de vencimento no formato YYYY-MM-DD",
                         "type": "string",
                         "format": "date",
                         "example": "2023-12-31"

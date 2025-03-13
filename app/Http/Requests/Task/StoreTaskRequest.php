@@ -8,9 +8,9 @@ namespace App\Http\Requests\Task;
  *     required={"title"},
  *     @OA\Property(property="title", type="string", example="Concluir a documentação do projeto"),
  *     @OA\Property(property="description", type="string", example="Escrever documentação abrangente para o projeto"),
- *     @OA\Property(property="status", type="string", enum={"pending", "in_progress", "completed"}, example="pending"),
- *     @OA\Property(property="color_id", type="integer", example=2),
- *     @OA\Property(property="due_date", type="string", format="date", example="2023-12-31")
+ *     @OA\Property(property="status", type="string", enum={"pending", "in_progress", "completed"}, example="pending", description="Status da tarefa"),
+ *     @OA\Property(property="color_id", type="integer", example=2, description="ID da cor da tarefa"),
+ *     @OA\Property(property="due_date", type="string", format="date", example="2023-12-31", description="Data de vencimento no formato YYYY-MM-DD")
  * )
  */
 class StoreTaskRequest extends BaseTaskRequest

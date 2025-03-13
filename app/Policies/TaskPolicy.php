@@ -93,7 +93,7 @@ class TaskPolicy
     public function viewAll(User $user): bool
     {
         // Somente administradores e gerentes podem ver todas as tarefas no sistema
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isManager();
     }
     
     /**
