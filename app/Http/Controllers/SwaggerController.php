@@ -43,12 +43,12 @@ use Illuminate\Http\Request;
  *          @OA\Property(property="name", type="string", example="Azul", description="Nome da cor"),
  *          @OA\Property(property="hex_code", type="string", example="#0000FF", description="Cor em formato hexadecimal")
  *      ),
- *      @OA\Property(property="due_date", type="string", format="date", example="2023-12-31"),
+ *      @OA\Property(property="due_date", type="string", format="date", example="2025-12-31"),
  *      @OA\Property(property="is_overdue", type="boolean", example=false),
  *      @OA\Property(property="is_favorited", type="boolean", example=false),
  *      @OA\Property(property="favorites_count", type="integer", example=1),
- *      @OA\Property(property="created_at", type="string", format="date-time", example="2023-01-01 12:00:00"),
- *      @OA\Property(property="updated_at", type="string", format="date-time", example="2023-01-02 13:00:00"),
+ *      @OA\Property(property="created_at", type="string", format="date-time", example="2025-01-01 12:00:00"),
+ *      @OA\Property(property="updated_at", type="string", format="date-time", example="2025-01-02 13:00:00"),
  *      @OA\Property(
  *          property="user", 
  *          type="object",
@@ -77,8 +77,8 @@ use Illuminate\Http\Request;
  *         @OA\Property(property="id", type="integer", example=3, description="ID do perfil"),
  *         @OA\Property(property="type", type="string", enum={"admin", "manager", "member"}, example="member", description="Tipo de perfil de usuário")
  *     ),
- *     @OA\Property(property="created_at", type="string", format="date-time", example="2023-01-01 12:00:00", description="Data da criação"),
- *     @OA\Property(property="updated_at", type="string", format="date-time", example="2023-01-02 13:00:00", description="Última data de atualização")
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-01-01 12:00:00", description="Data da criação"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-01-02 13:00:00", description="Última data de atualização")
  * )
  * 
  * @OA\Schema(

@@ -16,16 +16,19 @@ class UserSeeder extends Seeder
         User::factory()->admin()->create([
             'name' => 'Admininastro',
             'email' => 'admin@email.com',
+            'password' => 'password',
         ]);
         
         User::factory()->manager()->create([
             'name' => 'Gerente',
             'email' => 'manager@email.com',
+            'password' => 'password',
         ]);
         
         User::factory()->member()->create([
             'name' => 'Membro',
             'email' => 'member@email.com',
+            'password' => 'password',
         ]);
         
         User::factory()->count(5)->create();

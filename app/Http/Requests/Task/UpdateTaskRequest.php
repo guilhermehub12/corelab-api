@@ -9,7 +9,7 @@ namespace App\Http\Requests\Task;
  *     @OA\Property(property="description", type="string", example="Documentação abrangente atualizada para o projeto"),
  *     @OA\Property(property="status", type="string", enum={"pending", "in_progress", "completed"}, example="in_progress"),
  *     @OA\Property(property="color_id", type="integer", example=3),
- *     @OA\Property(property="due_date", type="string", format="date", example="2023-12-31")
+ *     @OA\Property(property="due_date", type="string", format="date", example="2025-12-31")
  * )
  */
 class UpdateTaskRequest extends BaseTaskRequest
